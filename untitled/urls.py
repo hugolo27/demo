@@ -19,6 +19,8 @@ from django.contrib import admin
 from django.urls import path
 
 admin.site.register(Request, admin.ModelAdmin)
+admin.site.site_header = "Receptor JSON"
+admin.site.site_title = "Receptor JSON"
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -9,6 +9,10 @@ class Request(models.Model):
 
     body = models.TextField(null=True, blank=True)
 
+    class Meta:
+        verbose_name = 'Request recibido'
+        verbose_name_plural = 'Requests recibidos'
+
 class Demo(APIView):
 
     def get(self, request, format=None):
@@ -18,7 +22,7 @@ class Demo(APIView):
         try:
             bod = json.loads(request.body)
             try:
-                niu = Request(body=str(bod))
+                niu = Request(body=str(bod).replace("'", '"'))
                 niu.save()
             except:
                 pass

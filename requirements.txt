@@ -4,3 +4,4 @@ djangorestframework
 psycopg2-binary
 dj-database-url
 gunicorn
+whitenoise==3
