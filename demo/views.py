@@ -36,6 +36,7 @@ def ver_request(request):
         return redirect('/admin/demo/request')
     try:
         req = Request.objects.get(id=id)
+
         return render(request, 'ver_request.html', context={"req": req})
     except:
         messages.add_message(request, messages.ERROR, 'Request no encontrado')

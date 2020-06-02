@@ -52,16 +52,38 @@
         {% endif %}
     {% endblock messages %}
 {% block content %}
+    <style>
+        .btn:hover {
+            opacity: .7;
+        }
+    </style>
     <div class="row">
         <div class="col-xs-12">
-            <h1 style="text-transform: uppercase">Request almacenado:</h1>
+            <h1 style="margin-bottom: 10px">Request almacenado:</h1>
             <hr/><br/>
-            <input type="submit" value="COPIAR" class="default" onclick="copiar()"/>
+            <div style="display: inline-grid; float: right">
+                <input style="margin: 0; float: none" type="submit" value="Copiar" class="default" onclick="copiar()"/>
+                <a href="/admin/demo/request/{{ req.id }}/delete/" class="deletelink btn" style="
+                    display: block;
+                    background: #ba2121;
+                    border-radius: 4px;
+                    padding: 10px 15px;
+                    height: 15px;
+                    margin-top: 15px;
+                    line-height: 15px;
+                    color: #fff;
+                ">Eliminar</a>
+            </div>
             <pre id="json" style="
                 color: #417690;
                 height: 55vh;
-                width: 85vw;
-                overflow: scroll;">{{ req.body }}</pre>
+                width: 85%;
+                overflow: scroll;
+                background: #d3d3d32e;
+                border: 1px solid #417690;
+                padding: 15px;
+                border-radius: 4px;
+                margin: 0;">{{ req.body }}</pre>
         </div>
     </div>
     <script>
