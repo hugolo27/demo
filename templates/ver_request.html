@@ -1,0 +1,82 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+{% load i18n %}
+{% block extrahead %}
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css">
+    <script src="{% static "js/sorttable.js" %}"></script>
+    <script src="{% static "js/jquery-3.4.1.min.js" %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.init.js' %} "></script>
+    <script type="text/javascript" src="{% static 'js/sweetalert2.min.js' %} "></script>
+{% endblock %}
+{% block title %}
+    Visor de request
+{% endblock %}
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a> ›
+    <a href="/admin/demo/">Utilitarios</a> ›
+    <a href="/admin/demo/request/">Requests</a>
+    {% if title %} &rsaquo; {{ title }}{% endif %}
+        › Visor de request
+    </div>
+{% endblock %}
+{% block usertools %}
+    <div id="user-tools">
+        {% block welcome-msg %}
+            {% trans 'Bienvenido,' %}
+            <strong>{% firstof user.get_short_name user.get_username %}</strong>.
+        {% endblock %}
+        {% block userlinks %}
+            {% if site_url %}
+                <a href="{{ site_url }}">{% trans 'View site' %}</a> /
+            {% endif %}
+            {% if user.is_active and user.is_staff %}
+                {% url 'django-admindocs-docroot' as docsroot %}
+                {% if docsroot %}
+                    <a href="{{ docsroot }}">{% trans 'Documentation' %}</a> /
+                {% endif %}
+            {% endif %}
+            {% if user.has_usable_password %}
+            <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a> /
+            {% endif %}
+            <a href="{% url 'admin:logout' %}">{% trans 'Log out' %}</a>
+        {% endblock %}
+    </div>
+{% endblock %}
+{% block nav-global %}{% endblock %}
+    {% block messages %}
+        {% if messages %}
+        <ul class="messagelist">{% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li>
+        {% endfor %}</ul>
+        {% endif %}
+    {% endblock messages %}
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <h1 style="text-transform: uppercase">Request almacenado:</h1>
+            <hr/><br/>
+            <input type="submit" value="COPIAR" class="default" onclick="copiar()"/>
+            <pre id="json" style="
+                color: #417690;
+                height: 55vh;
+                width: 85vw;
+                overflow: scroll;">{{ req.body }}</pre>
+        </div>
+    </div>
+    <script>
+        var str = '{{ req.body }}';
+        str = str.split("&quot;").join('"');
+        document.getElementById("json").innerHTML = JSON.stringify(JSON.parse(str), null, 4);
+        document.getElementById("txt").value = str;
+        
+        function copiar() {
+            const el = document.createElement('textarea');
+            el.value = str;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+        }
+    </script>
+{% endblock %}
