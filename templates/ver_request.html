@@ -11,6 +11,9 @@
 {% block title %}
     Visor de request
 {% endblock %}
+{% block branding %}
+    <h1 id="site-name"><a href="{% url 'admin:index' %}">Receptor JSON</a></h1>
+{% endblock %}
 {% block breadcrumbs %}
     <div class="breadcrumbs">
     <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a> ›
